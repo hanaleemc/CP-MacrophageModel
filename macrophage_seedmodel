@@ -1,0 +1,15 @@
+initCobraToolbox(false) 
+changeCobraSolver ('glpk', 'all'); 
+load("Recon3DM_301_OriginalGPR_updated.mat") 
+modelFileName = 'Recon3DM_301_OriginalGPR_updated.mat'; 
+model = Recon3DModelupdated; 
+reactionexpression = xlsread('expressionData_revised.xlsx');
+ed_gene = reactionexpression(:,2);
+ed_value = reactionexpression(:,1);
+expressionData.gene = ed_gene
+expressionData.value = ed_value
+expressionRxns = mapExpressionToReactions(model,expressionData);
+threshold = 0.1
+model.rxns = unique(model.rxns) 
+MacrophageModel = GIMME(model,expressionRxns,threshold)
+
