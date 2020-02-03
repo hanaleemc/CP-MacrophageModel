@@ -2,9 +2,9 @@
 Included is my code for generating a Macrophage Model from RECON 3D and the Sanity Tests to assess basic model performance. 
 
 Included in this reposity are the following files: 
-Msample_analysis_full.R
-macrophage_seedmodel
-sanity_tests.m
+"Msample_analysis_full.R,"
+"macrophage_seedmodel," and
+"sanity_tests.m."
 
 Msample_analysis_full.R contains all the data cleaning/normalization code used to extract gene expression data through Agilent or Affy analysis. This code transforms the expression data into a series of 0s(inactive) and 1s(active) this information forms the basis of my construction of a macrophage model. 
 
