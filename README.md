@@ -1,5 +1,5 @@
 # CP-MacrophageModel
-Included is my code for generating a Macrophage Model from RECON 3D and the Sanity Tests to assess basic model performance. 
+This is an in-progress repository to share my code for generating a Macrophage Model from RECON 3D and the Sanity Tests to assess basic model performance. 
 
 Included in this reposity are the following files: 
 "Msample_analysis_full.R,"
