@@ -1,0 +1,51 @@
+#Macrophage M1 data series - analysis 
+
+#m1_1 agilent data set 
+library(limma)
+setwd("/Users/new/Downloads/Labs/Helikar_Lab/Macrophage-CNS/M1/M1_1/GSE88768_RAW/")
+m1_1 <- readTargets("M1_1")
+m1_x = read.maimages(M1_1, source="agilent",green.only=TRUE)
+m1_y = backgroundCorrect(macro1_x, method="normexp", offset = 16)
+m1_y = normalizeBetweenArrays(macro1_y, method="quantile")
+m1_neg95 <- apply(macro1_y$E[macro1_y$genes$ControlType==-1,],2,function(macro1_x) quantile(macro1_x,probs = 0.95)) # this denotes the control type that you are using and the quantile within which you are designating. This current iteration uses a negative control and looks at the top five percentile The control types that you can have are [-1,1]#identifying which rows are negative controls and establishes quantile
+m1_cutoff <- matrix(1.4*macro1_neg95,nrow(macro1_y),ncol(macro1_y),byrow=TRUE)
+m1_isexpr = rowSums(m1_y$E>m1_cutoff)>=3
+table(m1_isexpr)
+m1_y0 <- m1_y[m1_y$genes$ControlType==0 & m1_isexpr,]
+write.table(m1_y0, file="eset1_PMA.xls", quote=F, col.names = NA, sep="\t")
+
+#affy analysis m1_2 data set 
+library(affy)
+setwd("/Users/new/Downloads/Labs/Helikar_Lab/Macrophage-CNS/M1/M1_2/GSE11886_RAW/")
+m1_2 <- ReadAffy() 
+esetm1_2 <- mas5(m1_2) 
+esetm1_2_PMA <- mas5calls(m1_2) 
+write.exprs(esetm1_2, file="esetm1_2_PMA.txt") 
+m1_2_x <- data.frame(exprs(esetm1_2), exprs(esetm1_2_PMA), assayDataElement(esetm1_2_PMA, "se.exprs"))
+m1_2_x <- m1_2_x[,sort(names(m1_2_x))];
+write.table(m1_2_x, file="esetm1_2_PMA.xls", quote=F, col.names = NA, sep="\t") 
+
+#m1_3
+library(affy)
+#set working directory 
+setwd("/Users/new/Downloads/Labs/Helikar_Lab/Macrophage-CNS/M1/M1_3/GSE5099_RAW/")
+m1_3 <- ReadAffy()
+esetm1_3 <- mas5(m1_3)
+esetm1_3_PMA <-mas5calls(m1_3)
+write.exprs(esetm1_3, file="esetm1_3_PMA.txt") 
+m1_3_x <- data.frame(exprs(esetm1_3), exprs(esetm1_3_PMA), assayDataElement(esetm1_3_PMA, "se.exprs"))
+m1_3_x <- m1_3_x[,sort(names(m1_3_x))];
+write.table(m1_3_x, file="esetm1_3_PMA.xls", quote=F, col.names = NA, sep="\t") 
+
+#mm1_4
+library(affy)
+#set working directory 
+setwd("/Users/new/Downloads/Labs/Helikar_Lab/Macrophage-CNS/M1/M1_4/GSE8515_RAW/")
+m1_4 <- ReadAffy()
+esetm1_4 <- mas5(m1_4)
+esetm1_4_PMA <-mas5calls(m1_4)
+write.exprs(esetm1_4, file="esetm1_4_PMA.txt") 
+m1_4_x <- data.frame(exprs(esetm1_4), exprs(esetm1_4_PMA), assayDataElement(esetm1_4_PMA, "se.exprs"))
+m1_4_x <- m1_4_x[,sort(names(m1_4_x))];
+write.table(m1_4_x, file="esetm1_4_PMA.xls", quote=F, col.names = NA, sep="\t") 
+
